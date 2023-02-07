@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// UnitActionSystem is a Singleton
 // Handles selection of unit and movement of selected unit
 public class UnitActionSystem : MonoBehaviour
 {
@@ -30,7 +31,14 @@ public class UnitActionSystem : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             if(TryHandleUnitSelection()) return;
-            selectedUnit.Move(MouseWorld.GetPosition());
+            // converts mouse click position into a mouse position on the grid
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            // checks if mouse position on grid is a valid move position for the selected unit
+            if(selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
+            {
+                selectedUnit.GetMoveAction().Move(mouseGridPosition);
+            }
+            //selectedUnit.GetMoveAction().Move(MouseWorld.GetPosition());
         }
     }
 

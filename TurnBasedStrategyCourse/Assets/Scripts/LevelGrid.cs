@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// LevelGrid is a Singleton
+// This class manages the GridSystem instance for the level
+// It also adds and removes units from grid Positions
 public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid Instance { get; private set; }
@@ -12,7 +15,7 @@ public class LevelGrid : MonoBehaviour
     {
         if(Instance != null)
         {
-            Debug.LogError("There's more than one UnitActionSystem! " + transform + " - " + Instance);
+            Debug.LogError("There's more than one LevelGrid! " + transform + " - " + Instance);
             Destroy(gameObject);
             return;
         }
@@ -40,7 +43,7 @@ public class LevelGrid : MonoBehaviour
         gridObject.RemoveUnit(unit);
     }
 
-    public void UnitMovedGridPosition(Unit unit, GridPosition fromGridPosition, GridPosition toGridPosition)
+    public void UnitMovedToGridPosition(Unit unit, GridPosition fromGridPosition, GridPosition toGridPosition)
     {
         RemoveUnitAtGridPosition(fromGridPosition, unit);
         AddUnitToGridPosition(toGridPosition, unit);
@@ -51,4 +54,17 @@ public class LevelGrid : MonoBehaviour
     {
         return gridSystem.GetGridPosition(worldPosition);
     }
+
+    public Vector3 GetWorldPosition(GridPosition gridPosition) => gridSystem.GetWorldPosition(gridPosition);
+
+    public bool isValidGridPosition(GridPosition gridPosition) => gridSystem.isValidGridPosition(gridPosition);
+    
+    public bool HasAnyUnitOnGridPosition(GridPosition gridPosition)
+    {
+        GridObject gridObject = gridSystem.GetGridObject(gridPosition);
+        return gridObject.HasAnyUnit();
+    }
+
+    public int GetWidth() => gridSystem.GetWidth();
+    public int GetHeight() => gridSystem.GetHeight();
 }

@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// GridSystem instantiates the floor grids
+// GridSystem instantiates the floor grids and sets the dimensions of the grids
+// using the defined width, height and cell size
+// it also gets a reference of all the grids using the GridObject array
 // and gets the floor grid Position of an Object that exists in the world Space
 public class GridSystem
 {
@@ -52,7 +54,6 @@ public class GridSystem
         {
             for(int z = 0; z < height; z++)
             {
-                // creates a grid Position
                 GridPosition gridPosition = new GridPosition(x, z);
                 GameObject debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity);
                 GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
@@ -64,5 +65,23 @@ public class GridSystem
     public GridObject GetGridObject(GridPosition gridPosition)
     {
         return gridObjectArray[gridPosition.x, gridPosition.z];
+    }
+
+    public bool isValidGridPosition(GridPosition gridPosition)
+    {
+        return gridPosition.x >= 0 && 
+                gridPosition.z >= 0 &&
+                gridPosition.x < width &&
+                gridPosition.z < height;
+    }
+
+    public int GetWidth()
+    {
+        return width;
+    }
+
+    public int GetHeight()
+    {
+        return height;
     }
 }

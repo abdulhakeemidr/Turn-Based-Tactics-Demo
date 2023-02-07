@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// GridDebugObject is attached to the 3d Text GridDebugObject prefab
+// this script controls the text that is written on the 3d text gameobject
+// it displays the position of the gridObject and the name of any unit standing above it
 public class GridDebugObject : MonoBehaviour
 {
     private GridObject gridObject;

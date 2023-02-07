@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// GridObject is an instance of a grid
+// GridObject stores the value of the gridPosition of each grid in a GridObject instance
+// It also stores a reference to any units that are standing on a grid
 public class GridObject
 {
     private GridSystem gridSystem;
@@ -39,5 +42,10 @@ public class GridObject
         }
 
         return gridPosition.ToString() + "\n" + unitString;
+    }
+
+    public bool HasAnyUnit()
+    {
+        return unitListOnGrid.Count > 0;
     }
 }

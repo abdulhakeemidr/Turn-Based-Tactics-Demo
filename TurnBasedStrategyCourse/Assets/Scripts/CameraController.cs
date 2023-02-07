@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+// CameraController attaches to the CameraController GameObject
+// that the cinemachine is set to look at and follow
+// The cameraController handles the movement, rotation and zoom of the camera
 public class CameraController : MonoBehaviour
 {
     private const float MIN_FOLLOW_Y_OFFSET = 2f;
