@@ -41,6 +41,9 @@ public class UnitActionSystem : MonoBehaviour
     {
         if(isBusy) return;
 
+        // if it is the enemy turn (not the player turn), do nothing
+        if(!TurnSystem.Instance.IsPlayerTurn()) return;
+
         if(EventSystem.current.IsPointerOverGameObject()) return;
 
         if(TryHandleUnitSelection()) return;
@@ -91,6 +94,7 @@ public class UnitActionSystem : MonoBehaviour
                 if(raycastHit.transform.TryGetComponent<Unit>(out Unit unit))
                 {
                     if(unit == selectedUnit) return false;
+                    if(unit.IsEnemy()) return false;
                     //selectedUnit = unit;
                     SetSelectedUnit(unit);
                     return true;
