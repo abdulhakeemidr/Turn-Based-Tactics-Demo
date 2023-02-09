@@ -1,11 +1,11 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 // MoveAction is responsible for moving the unit character around
 // the grids with a preset max move distance between grids
 // MoveAction also checks which moves are valid for the unit
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
     [SerializeField]
     private Animator unitAnimator;
@@ -13,48 +13,48 @@ public class MoveAction : MonoBehaviour
     private int maxMoveDistance = 4;
 
     private Vector3 targetPosition;
-    private Unit unit;
 
-    private void Awake()
+    protected override void Awake()
     {
-        unit = GetComponent<Unit>();
+        base.Awake();
         targetPosition = transform.position;
     }
 
     void Update()
     {
+        if(!isActive) return;
+
+        Vector3 moveDirection = (targetPosition - transform.position).normalized;
+        
         float stopDistance = 0.1f;
         if(Vector3.Distance(transform.position, targetPosition) > stopDistance)
         {
-            Vector3 moveDirection = (targetPosition - transform.position).normalized;
             float moveSpeed = 4f;
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
-
-            float rotateSpeed = 10f;
-            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
 
             unitAnimator.SetBool("isWalking",true);
         }
         else
         {
             unitAnimator.SetBool("isWalking",false);
+            isActive = false;
+            onActionComplete();
         }
+
+        float rotateSpeed = 10f;
+            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
     }
 
     // Sets the targetPosition to the centre of the grid in Vector3 terms
-    public void Move(GridPosition targetGridPositon)
+    public override void TakeAction(GridPosition targetGridPositon, Action onActionComplete)
     {
+        this.onActionComplete = onActionComplete;
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(targetGridPositon);
-    }
-
-    public bool IsValidActionGridPosition(GridPosition gridPosition)
-    {
-        List<GridPosition> validGridPositionList = GetValidActionGridPositionList();
-        return validGridPositionList.Contains(gridPosition);
+        isActive = true;
     }
 
     // This function gets all valid move positions for a unit
-    public List<GridPosition> GetValidActionGridPositionList()
+    public override List<GridPosition> GetValidActionGridPositionList()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
@@ -89,5 +89,10 @@ public class MoveAction : MonoBehaviour
             }
         }
         return validGridPositionList;
+    }
+
+    public override string GetActionName()
+    {
+        return "Move";
     }
 }
