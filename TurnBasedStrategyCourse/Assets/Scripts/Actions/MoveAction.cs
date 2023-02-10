@@ -46,10 +46,10 @@ public class MoveAction : BaseAction
     // Sets the targetPosition to the centre of the grid in Vector3 terms
     public override void TakeAction(GridPosition targetGridPositon, Action onActionComplete)
     {
-        ActionStart(onActionComplete);
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(targetGridPositon);
 
         OnStartMoving?.Invoke(this, EventArgs.Empty);
+        ActionStart(onActionComplete);
     }
 
     // This function gets all valid move positions for a unit

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Spawns a ragdoll when the health system's onDead event is called
+// to simulate a unit dying
 public class UnitRagdollSpawner : MonoBehaviour
 {
     [SerializeField] private Transform ragdollPrefab;

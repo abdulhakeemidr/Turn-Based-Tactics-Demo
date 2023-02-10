@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This attaches to the ragdoll prefab and ensures the ragdoll is the same
+// pose as the unit when the ragdoll is spawned (MatchAllChildTransforms) and
+// it applies an explosion force to the ragdoll when it dies to simulate a kickback force
 public class UnitRagdoll : MonoBehaviour
 {
     [SerializeField] private Transform ragdollRootBone;
