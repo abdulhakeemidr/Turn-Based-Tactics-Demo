@@ -7,8 +7,9 @@ using UnityEngine;
 // MoveAction also checks which moves are valid for the unit
 public class MoveAction : BaseAction
 {
-    [SerializeField]
-    private Animator unitAnimator;
+    public event EventHandler OnStartMoving;
+    public event EventHandler OnStopMoving;
+
     [SerializeField]
     private int maxMoveDistance = 4;
 
@@ -31,12 +32,10 @@ public class MoveAction : BaseAction
         {
             float moveSpeed = 4f;
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
-
-            unitAnimator.SetBool("isWalking",true);
         }
         else
         {
-            unitAnimator.SetBool("isWalking",false);
+            OnStopMoving?.Invoke(this, EventArgs.Empty);
             ActionComplete();
         }
 
@@ -49,6 +48,8 @@ public class MoveAction : BaseAction
     {
         ActionStart(onActionComplete);
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(targetGridPositon);
+
+        OnStartMoving?.Invoke(this, EventArgs.Empty);
     }
 
     // This function gets all valid move positions for a unit
