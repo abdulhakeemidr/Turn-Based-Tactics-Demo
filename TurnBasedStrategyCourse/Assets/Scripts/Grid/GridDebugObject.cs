@@ -8,21 +8,21 @@ using TMPro;
 // it displays the position of the gridObject and the name of any unit standing above it
 public class GridDebugObject : MonoBehaviour
 {
-    private GridObject gridObject;
+    private object gridObject;
     [SerializeField] private TextMeshPro floorText;
 
 
-    public void SetGridObject(GridObject gridObject)
+    public virtual void SetGridObject(object gridObject)
     {
         this.gridObject = gridObject;
     }
 
-    private void Update() 
+    protected virtual void Update() 
     {
-        SetDebugVisual();
+        floorText.text = gridObject.ToString();
     }
 
-    private void SetDebugVisual()
+    protected void SetDebugVisual()
     {
         //floorText.text = $"x: {gridObject.gridPosition.x}; z: {gridObject.gridPosition.z}";
         floorText.text = gridObject.ToString();
