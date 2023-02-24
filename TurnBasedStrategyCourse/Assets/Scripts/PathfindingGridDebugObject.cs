@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// Customized GridDebugObject script for handling pathfinding values
 public class PathfindingGridDebugObject : GridDebugObject
 {
     [SerializeField] private TextMeshPro gCostText;

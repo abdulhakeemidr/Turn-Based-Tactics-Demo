@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Works like the LevelGrid script but for pathfinding
+// A* pathfinding algorithm implementation exists here
 public class Pathfinding : MonoBehaviour
 {
     public static Pathfinding Instance { get; private set; }

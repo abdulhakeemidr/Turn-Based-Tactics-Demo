@@ -30,5 +30,10 @@ public class Testing : MonoBehaviour
                 );
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Y))
+        {
+            ScreenShake.Instance.Shake(5f);
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Works like the GridObject script but for pathfinding
+// PathNode holds the pathfinding algorithm costs (gCost, hCost, fCost)
+// for each grid position
 public class PathNode
 {
     private GridPosition gridPosition;
